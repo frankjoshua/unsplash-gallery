@@ -28,7 +28,7 @@ class Gallery extends Component {
     this.setState({ start: this.state.start + 1 });
     axios
       .get(
-        `http://localhost:3001/photos/?count=${count}&start=${this.state.start}`
+        `${SERVER_URL}/photos/?count=${count}&start=${this.state.start}`
       )
       .then((res) =>
         this.setState({ images: this.state.images.concat(res.data) })
