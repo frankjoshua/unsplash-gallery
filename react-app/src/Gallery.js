@@ -4,6 +4,11 @@ import UnsplashImage from './UnsplashImage';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
+const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+if(!SERVER_URL){
+  throw new Error("REACT_APP_SERVER_URL must be set in .env");
+}
+
 class Gallery extends Component {
   state = {
     images: [],
@@ -14,7 +19,7 @@ class Gallery extends Component {
   componentDidMount() {
     const { count, start } = this.state;
     axios
-      .get(`http://localhost:3001/photos/?count=${count}&start=${start}`)
+      .get(`${SERVER_URL}/photos/?count=${count}&start=${start}`)
       .then((res) => this.setState({ images: res.data }));
   }
 
