@@ -43,7 +43,7 @@ class Gallery extends Component {
         loader={<h4>Loading...</h4>}
       >
         <Masonry
-          breakpointCols={3}
+          breakpointCols={{ default: 3, 800: 2 }}
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"
         >
