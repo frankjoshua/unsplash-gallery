@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import './Gallery.css';
 import UnsplashImage from './UnsplashImage';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Masonry from 'react-masonry-css';
+import './Gallery.css';
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
-if(!SERVER_URL){
-  throw new Error("REACT_APP_SERVER_URL must be set in .env");
+if (!SERVER_URL) {
+  throw new Error('REACT_APP_SERVER_URL must be set in .env');
 }
 
 class Gallery extends Component {
@@ -27,9 +28,7 @@ class Gallery extends Component {
     const { count } = this.state;
     this.setState({ start: this.state.start + 1 });
     axios
-      .get(
-        `${SERVER_URL}/photos/?count=${count}&start=${this.state.start}`
-      )
+      .get(`${SERVER_URL}/photos/?count=${count}&start=${this.state.start}`)
       .then((res) =>
         this.setState({ images: this.state.images.concat(res.data) })
       );
@@ -43,11 +42,15 @@ class Gallery extends Component {
         hasMore={true}
         loader={<h4>Loading...</h4>}
       >
-        <div className="gallery">
+        <Masonry
+          breakpointCols={3}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+        >
           {this.state.images.map((image) => (
             <UnsplashImage image={image} key={image.id} />
           ))}
-        </div>
+        </Masonry>
       </InfiniteScroll>
     );
   }
